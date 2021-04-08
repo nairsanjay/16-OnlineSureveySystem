@@ -145,13 +145,11 @@ function UserView(props) {
     return (
         <div style={{minHeight: '100vh'}}>
          <div>
-         <AppBar position="static" style={{backgroundColor: 'teal'}}>
+         <AppBar position="static" style={{backgroundColor: 'black'}}>
             <Toolbar>
-              <IconButton edge="start" style={{marginRight: '10px', marginBottom: '5px'}} color="inherit" aria-label="menu">
-                <MenuIcon />
-              </IconButton>
+             
               <Typography variant="h6" style={{}}>
-                Velocity Forms
+               Online Survey System
               </Typography>
             </Toolbar>
           </AppBar>
@@ -164,7 +162,7 @@ function UserView(props) {
                 alignItems="center"
               >
                 <Grid item xs={12} sm={5} style={{width: '100%'}}>         
-                  <Grid style={{borderTop: '10px solid teal', borderRadius: 10}}>
+                  <Grid style={{borderTop: '10px solid black', borderRadius: 10}}>
                         <div>
                           <div>
                             <Paper elevation={2} style={{width:'100%'}}>
@@ -234,7 +232,7 @@ function UserView(props) {
                       <Grid>
                     <br></br>
                     <div style={{display: 'flex'}}>
-                      <Button variant="contained" color="primary" onClick={submitResponse}>
+                      <Button variant="contained" color="black" onClick={submitResponse}>
                         Submit
                       </Button>
                     </div>
@@ -255,10 +253,6 @@ function UserView(props) {
                    </div>
                  )
                 }
-
-                  
-
-                 
                 </Grid>  
 
                
