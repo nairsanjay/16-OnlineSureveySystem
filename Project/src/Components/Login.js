@@ -2,6 +2,7 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import authService from '../services/authService';
 import { useHistory } from "react-router-dom";
 import React from 'react';
+import LoginContainer from './LoginContainer'
 
 
 import AppBar from '@material-ui/core/AppBar';
@@ -16,6 +17,8 @@ import ViewListIcon from '@material-ui/icons/ViewList';
 
 import GoogleButton from 'react-google-button'
 import Avatar from "@material-ui/core/Avatar";
+
+
 
 const useStyles = makeStyles((theme) => ({
     icon: {
@@ -112,7 +115,7 @@ function Login(props){
         <div>
              <CssBaseline />
              <div style={{display: 'flex', flexGrow: 1, textAlign: 'start'}}>
-        <AppBar position="relative" style={{backgroundColor: 'black'}}>
+        <AppBar position="relative" style={{backgroundColor: 'blue'}}>
           <Toolbar>
             
             <Typography variant="h6" color="inherit" noWrap className={classes.title}>
@@ -136,13 +139,17 @@ function Login(props){
                                 <p>Already logged in. Want to logout?</p>
                                 <button onClick={logout}>Logout </button>
                             </div>) : (
-                           <Button
-                            onClick={loginAsGuest}
-                            variant="contained"
-                            style={{textTransform: "none"}}
-                            startIcon={<Avatar  src={"https://static.thenounproject.com/png/3244607-200.png"}/>  } >
-                            Login as Guest(Anonymous)
-                        </Button>
+                              <div>
+                                <LoginContainer />
+                                <Button
+                                onClick={loginAsGuest}
+                                variant="contained"
+                                style={{textTransform: "none"}}
+                                startIcon={<Avatar  src={"https://static.thenounproject.com/png/3244607-200.png"}/>  } >
+                                Login as Guest(Anonymous)
+                                </Button>
+                              </div>
+                            
                    )
                }
             </div>
