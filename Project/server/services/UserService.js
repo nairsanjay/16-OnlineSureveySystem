@@ -56,7 +56,7 @@ module.exports = {
                     // User matched
                     // Create JWT Payload
                     const payload = {
-                      id: user.email,
+                      id: user._id,
                       name: user.name
                     };
             
