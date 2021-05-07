@@ -143,6 +143,12 @@ module.exports = {
             res.send(error)
         }
     },
+    
+
+
+
+
+    
 
     submitResponse : async(req, res)=>{
         try {
@@ -191,6 +197,32 @@ module.exports = {
                     res.status(200).json(responses)
             })
 
+        } catch (error) {
+            res.send(error)
+        }
+    },
+
+    getall: async(req, res)=>{
+        console.log("Sanjay Nair");
+        try {
+            var userId = req.params.userId;
+            console.log("From FromService.js",userId);
+            await UserModel.findOne({_id:userId}).then(async(user)=>{
+                if(user == null){
+                    res.status(404).send('User not found');
+                    console.log('User Not Found');
+                } else{ 
+                   await FormModel.find().where('_id').in(user.createdForms).exec((err, records) => {
+                       console.log(records);
+       
+                       res.status(200).json(records);
+                   });
+                }
+
+             //   res.send(docs.createdForms)
+            });
+
+            
         } catch (error) {
             res.send(error)
         }

@@ -10,6 +10,15 @@ export default {
             return response.data;
         })
     },
+     getForms2(userId){
+        return axios
+        .get(API_URL + "getuserforms2/" +userId)
+        .then(response =>{
+            return response.data;
+        })
+    },
+    
+
 
     createForm(data){
         console.log(data);

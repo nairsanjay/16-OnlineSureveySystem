@@ -17,6 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import AddIcon from '@material-ui/icons/Add';
 import HomeIcon from '@material-ui/icons/Home';
 import Forms from './Form/Forms';
+import Forms2 from './Form/Forms2';
 import { useHistory } from "react-router-dom";
 
 import Dialog from '@material-ui/core/Dialog';
@@ -27,7 +28,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import formService from '../services/formService';
-
 
 
 
@@ -110,6 +110,8 @@ function Dashboard() {
     const [formTitle, setFormTitle] = React.useState("");
     const [formDescription, setFormDescription] = React.useState("");
 
+    const [form1,setForm1]=React.useState("s");
+
     const handleClickOpen = () => {
       setOpen(true);
     };
@@ -143,6 +145,11 @@ function Dashboard() {
         auth.logout();
         history.push("/login");
       }
+    }
+     const dash2 = ()=>{
+
+       form1==1 ? setForm1(0) : setForm1(1);
+       console.log(form1);
     }
 
     const cancelAddForm = ()=>{
@@ -252,12 +259,21 @@ function Dashboard() {
         <Typography className={classes.title} variant="h6" noWrap>
           Online Survey System
         </Typography>
-
+         
         
         <div className={classes.grow} />
         <div className={classes.sectionDesktop}>
-          
-        
+          <IconButton
+            edge="end"
+            aria-label="account of current user"
+            color="inherit"
+            onClick={dash2}
+          >
+           <small>{form1==1?"AllForm":"MyForm"}</small>
+          </IconButton>
+         <IconButton aria-label="Create new form" color="inherit" onClick={handleClickOpen}> 
+              <AddIcon />
+          </IconButton>
           <IconButton
             edge="end"
             aria-label="account of current user"
@@ -325,8 +341,16 @@ function Dashboard() {
             </Dialog>   
             </div>
             <div style={{marginTop:"10px"}}>
-
+              {
+                form1==1 ?
+                (
+                <Forms2 userId={user.id}/>
+                ):
+                (
                 <Forms userId={user.id}/>
+                )
+              }
+              
             </div>
     </div>
   </div>
