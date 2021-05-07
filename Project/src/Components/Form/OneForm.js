@@ -51,7 +51,7 @@ export default function OneForm(props) {
                             />
                             <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
-                               {form.name,console.log(form)}
+                               {form.name}
                             </Typography>
                             <Typography variant="body2" color="textSecondary" component="p">
                                {form.description}

@@ -41,7 +41,7 @@ function Forms(props) {
     React.useEffect(()=>{
 
         if(props.userId === undefined){
-            //console.log("this shit is undefined");
+       
         } else{
              //console.log("Defined");
             formService.getForms(props.userId)
