@@ -13,6 +13,8 @@ import Login from './Components/Login'
 import PrivateRoute from './Components/util/PrivateRoute'
 import UserView from './Components/Responding/UserView'
 import RadioCheck from './Components/Responding/RadioCheck'
+import Dashboard from './Components/Dashboard'
+
 
 function Main() {
   return (
@@ -21,9 +23,13 @@ function Main() {
             <Switch>
                 <Route exact path="/" component={Home}/> 
                 <Route exact path="/login" component={Login}/>
+ 
+
                 
                 <PrivateRoute path="/form/:formId" component={EditForm}/>
                 <Route exact path="/s/:formId" component={UserView} />
+
+
 
                 
              

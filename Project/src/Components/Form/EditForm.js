@@ -37,8 +37,8 @@ import QuestionsTab from './QuestionsTab';
 import ResponseTab from '../Response/ResponseTab';
 import formService from '../../services/formService';
 import auth from '../../services/authService';
-
-
+import { useHistory } from "react-router-dom";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -76,7 +76,7 @@ function EditForm(props) {
   const [open, setOpen] = React.useState(false);
   const [user, setUser] = React.useState({})
   const [formID, setFormID] = React.useState("");
-
+  let history = useHistory();
 
   const [formDeatils, setFormDetails] = React.useState({});
   const [openOfAlert, setOpenOfAlert] = React.useState(false);
@@ -90,6 +90,9 @@ function EditForm(props) {
     handleClickOfAlert();
     handleClose();
   }
+   const handletmp = () => {
+    history.push("/");
+  };
 
   const handleClickOfAlert = () => {
     setOpenOfAlert(true);
@@ -154,22 +157,18 @@ function EditForm(props) {
                     <IconButton
                         edge="start"
                         className={classes.menuButton}
-                        aria-label="Rohit Saini's form"
+                        aria-label="tmp"
                         style={{color: '#140078'}}
                         
                     >
-                        <ViewListIcon />
+                        <ArrowBackIcon onClick={handletmp}/>
                     </IconButton>
                     <Typography variant="h6" noWrap style={{marginTop: '8.5px', color:'black'}}>
                         {formDeatils.name}
                     </Typography>
                     
 
-                    <IconButton
-                        aria-label="Group-16 form" 
-                    >
-                        <StarBorderIcon />
-                    </IconButton>
+                   
                     
 
                     <Tabs
@@ -183,26 +182,13 @@ function EditForm(props) {
                     <Tab label="Questions" />
                     <Tab label="Responses" />
                 </Tabs>
+
                     <IconButton aria-label="search" onClick={sendForm}>
                         <SendIcon />
                     </IconButton>
                 
-                    <IconButton aria-label="search">
-                        <PaletteIcon />
-                    </IconButton>
-                    <IconButton aria-label="search">
-                        <VisibilityIcon />
-                    </IconButton>
-                    <IconButton aria-label="search">
-                        <SettingsIcon />
-                    </IconButton>
-                    
-                    <IconButton aria-label="display more actions" edge="end">
-                        <MoreIcon />
-                    </IconButton>
-                    <IconButton aria-label="display more actions" edge="end">
-                        <AccountCircleIcon />
-                    </IconButton>
+                   
+                  
                     </Toolbar>
                 </AppBar>
             </div>
@@ -220,7 +206,6 @@ function EditForm(props) {
                   <Grid container alignContent="space-between" alignItems="center">
                       <Grid item>
                           <Typography variant="body1">{window.location.origin + "/s/" + formDeatils._id}</Typography>
-                          
                       </Grid>
                       <Grid item>
                           <IconButton className={classes.button} aria-label="Add" size="medium" onClick={clipToClipboard} ><FilterNoneIcon /></IconButton>

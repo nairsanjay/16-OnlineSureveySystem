@@ -56,21 +56,29 @@ function UserView(props) {
     
 
     const handleRadioChange = (j, i) => {
-      var questionId = questions[i]._id
-      var optionId = questions[i].options[j]._id
 
+      j=j.target.value;
+      
+
+      data=[...questions[i].options]
+      var j2=data.findIndex(y=>y._id===j);
+      console.log(j2);
+      var questionId = questions[i]._id
+      var optionId = questions[i].options[j2]._id
+     // console.log(j2);
       var fakeData = {
         question: i,
-        option: j
+        option: j2
       }
       var data = {
         questionId, optionId
       }
+
     //  console.log(data);
       //console.log(fakeData);
      // console.log(j);
+
       
-      setValue(j)
 
       var fakeRData = [...responseData];
       
@@ -79,7 +87,8 @@ function UserView(props) {
         setResponseData(responseData=> [...responseData, data])
 
         } else{
-          fakeRData[indexOfResponse].questionId = questionId
+          fakeRData[indexOfResponse].optionId = optionId;
+          console.log("Hello");
           setResponseData(fakeRData);
         }
 
@@ -90,11 +99,11 @@ function UserView(props) {
 
     React.useEffect(() => {
         var formId = props.match.params.formId
-        console.log(formId);
+       // console.log(formId);
 
         formService.getForm(formId)
         .then((data) => { 
-            console.log(data);
+          //  console.log(data);
             
             setFormData(data)      
             setQuestions(data.questions) 
@@ -106,7 +115,7 @@ function UserView(props) {
                error.response.data.message) ||
                error.message ||
                error.toString();
-               console.log(resMessage);
+              // console.log(resMessage);
            }
        );
         
@@ -118,12 +127,12 @@ function UserView(props) {
         userId: userId,
         response: responseData
       }
-      console.log(submissionData);
+    //  console.log(submissionData);
       
       formService.submitResponse(submissionData)
       .then((data2) => { 
         setIsSubmitted(true)
-        console.log(data2);
+       // console.log(data2);
        },
        error => {
        const resMessage =
@@ -132,7 +141,7 @@ function UserView(props) {
            error.response.data.message) ||
            error.message ||
            error.toString();
-           console.log(resMessage);
+          // console.log(resMessage);
        }
    );
       
@@ -140,6 +149,16 @@ function UserView(props) {
 
     function reloadForAnotherResponse(){
       window.location.reload(true);
+    }
+
+
+
+    function x(i,y){
+      var value2=[...y];
+     // console.log(y);
+      //console.log(value2.findIndex(y=>y.questionId===i.toString())==-1?-1:value2[value2.findIndex(y=>y.questionId==i)].optionId);
+      return(value2.findIndex(y=>y.questionId===i.toString())==-1?-1:value2[value2.findIndex(y=>y.questionId==i)].optionId)
+
     }
 
     return (
@@ -202,12 +221,13 @@ function UserView(props) {
                                 
                                   <div>
     
-                                  <RadioGroup aria-label="quiz" name="quiz" value={value} onChange={(e)=>{handleRadioChange(e.target.value, i)}}>
-    
+                                  <RadioGroup aria-label="quiz" name="quiz" value={x(ques._id,responseData).toString()} onChange={(e)=>{handleRadioChange(e, i)}}>
+                                  
                                     {ques.options.map((op, j)=>(
                                       <div key={j}>
                                         <div style={{display: 'flex', marginLeft: '7px'}}>
-                                           <FormControlLabel  value={j} control={<Radio />} label={op.optionText} />
+                                       
+                                           <FormControlLabel  value={(op._id).toString()} control={<Radio />} label={op.optionText} />
                   
     
                                         </div>
@@ -232,7 +252,7 @@ function UserView(props) {
                       <Grid>
                     <br></br>
                     <div style={{display: 'flex'}}>
-                      <Button variant="contained" color="black" onClick={submitResponse}>
+                      <Button variant="contained" color="inherit" onClick={submitResponse}>
                         Submit
                       </Button>
                     </div>
