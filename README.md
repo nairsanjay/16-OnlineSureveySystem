@@ -1,4 +1,11 @@
 # OnlineSureveySystem
+To run the app first cd into project folder
+npm install
+cd server
+npm install
+cd..
+npm run dev
+
 Members-<br />
 | Student ID  | Username      | Name                   |
 |-------------|---------------|------------------------|
