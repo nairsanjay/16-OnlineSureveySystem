@@ -1,7 +1,9 @@
 const UserModel = require('../db/User')
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
-
+const express = require("express");
+const router = express.Router();
+const bcrypt = require("bcryptjs");
 
 module.exports = {
     loginGet : async(req,res)=>{
@@ -20,24 +22,118 @@ module.exports = {
         email: req.body.email
       }
 
-      var newUser=new  UserModel(userData2);
-      console.log("From UserService.js",newUser);
-      newUser.save().then((docs)=>{                        
-                        var user = { 
-                                   id: docs._id, 
-                                   name: docs.name,  
-                                   email: docs.email,
-                                   image: docs.image
-                                 }
-                       console.log("From UserService.js",user);
-                       const accessToken = jwt.sign(user, "Hello", {expiresIn: '24h'});
+        var newUser=new UserModel(userData2);
+        console.log("From UserService.js",newUser);
+        newUser.save().then((docs)=>{                        
+                var user = { 
+                           id: docs._id, 
+                           name: docs.name,  
+                           email: docs.email,
+                           image: docs.image
+                         }
+               console.log("From UserService.js",user);
+               const accessToken = jwt.sign(user, "Hello", {expiresIn: '24h'});
+               res.status(200).json({
+                   accessToken
+               });
+            })
+        },
+    
+        signIn: async(req,res)=>{  
+            var userData2={
+                email: req.body.email,
+                password: req.body.password
+            }
+            UserModel.findOne({ email }).then(user => {
+                // Check if user exists
+                if (!user) {
+                  return res.status(404).json({ emailnotfound: "Email not found" });
+                }
+            
+                // Check password
+                bcrypt.compare(userData2.password, user.password).then(isMatch => {
+                  if (isMatch) {
+                    // User matched
+                    // Create JWT Payload
+                    const payload = {
+                      id: user.id,
+                      name: user.name
+                    };
+            
+                    // Sign token
+                    jwt.sign(
+                      payload,
+                      keys.secretOrKey,
+                      {
+                        expiresIn: 31556926 // 1 year in seconds
+                      },
+                      (err, token) => {
+                        res.json({
+                          success: true,
+                          token: "Bearer " + token
+                        });
+                      }
+                    );
+                  } else {
+                    return res
+                      .status(400)
+                      .json({ passwordincorrect: "Password incorrect" });
+                  }
+                });
+              });
 
-                       res.status(200).json({
-                           accessToken
-                       });
-                    })
-                       
+
+
+    signUp: async(req,res)=>{  
+        var userData2={
+            name: req.body.name,  
+            email: req.body.email,
+            password: req.body.password,
+            question: req.bodu.question,
+            answer: req.body.answer
+        }
+        console.log(userData2)
+        UserModel.findOne({ email: req.body.email }).then(user => {
+            if (user) {
+              return res.status(400).json({ email: "Email already exists" });
+            } else {
+              const newUser = new UserModel({
+                name: req.body.name,  
+                email: req.body.email,
+                password: req.body.password,
+                question: req.bodu.question,
+                answer: req.body.answer
+              });
         
+              // Hash password before saving in database
+              bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(newUser.password, salt, (err, hash) => {
+                  if (err) throw err;
+                  newUser.password = hash;
+                  newUser
+                    .save()
+                    .then(user => res.json(user))
+                    .catch(err => console.log(err));
+                });
+              });
+            }
+          });
+        // var newUser = new  UserModel(userData2);
+        // console.log("From UserService.js",newUser);
+        // newUser.save().then((docs)=>{                        
+        //   var user = { 
+        //              id: docs._id, 
+        //                  name: docs.name,  
+        //                  email: docs.email,
+        //                  image: docs.image
+        //                }
+        //      console.log("From UserService.js",user);
+        //      const accessToken = jwt.sign(user, "Hello", {expiresIn: '24h'});
+        //      res.status(200).json({
+        //          accessToken
+        //      });
+        // })
+    }
 
 
         /*console.log("User.js",req.body.email);
