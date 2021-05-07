@@ -6,8 +6,8 @@ const mongoose  = require("mongoose");
 const app = express();
 
 const cors = require("cors");
-const router = require('./routes/router')
-
+const router = require('./routes/router');
+const ImageModel = require('./db/Image');
 
 //db
 
