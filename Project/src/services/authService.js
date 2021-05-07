@@ -72,12 +72,13 @@ export default   {
     },
 
     signInProper(data){
+      console.log(data);
        return axios
         .post(API_URL + "signIn", data)
         .then(response => {
           console.log(response.data); 
-          if (response.data.accessToken) {
-            localStorage.setItem("userTicket", JSON.stringify(response.data.accessToken)); 
+          if (response.data.success) {
+            localStorage.setItem("userTicket", JSON.stringify(response.data.token)); 
             console.log('Hello from inside');         
           }
           return response.data;
@@ -91,8 +92,8 @@ export default   {
        .post(API_URL + "signUp", data)
        .then(response => {
          console.log(response.data); 
-         if (response.data.accessToken) {
-           localStorage.setItem("userTicket", JSON.stringify(response.data.accessToken)); 
+         if (response.data.success) {
+           localStorage.setItem("userTicket", JSON.stringify(response.data.token)); 
            console.log('Hello from inside');         
          }
          return response.data;

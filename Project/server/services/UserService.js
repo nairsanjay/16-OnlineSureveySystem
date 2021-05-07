@@ -44,7 +44,7 @@ module.exports = {
                 email: req.body.email,
                 password: req.body.password
             }
-            UserModel.findOne({ email }).then(user => {
+            UserModel.findOne({email: req.body.email}).then(user => {
                 // Check if user exists
                 if (!user) {
                   return res.status(404).json({ emailnotfound: "Email not found" });
@@ -56,14 +56,14 @@ module.exports = {
                     // User matched
                     // Create JWT Payload
                     const payload = {
-                      id: user.id,
+                      id: user.email,
                       name: user.name
                     };
             
                     // Sign token
                     jwt.sign(
-                      payload,
-                      keys.secretOrKey,
+                        payload,
+                      "secret",
                       {
                         expiresIn: 31556926 // 1 year in seconds
                       },
@@ -81,6 +81,7 @@ module.exports = {
                   }
                 });
               });
+            },
 
 
 
@@ -89,7 +90,7 @@ module.exports = {
             name: req.body.name,  
             email: req.body.email,
             password: req.body.password,
-            question: req.bodu.question,
+            question: req.body.question,
             answer: req.body.answer
         }
         console.log(userData2)
@@ -101,7 +102,7 @@ module.exports = {
                 name: req.body.name,  
                 email: req.body.email,
                 password: req.body.password,
-                question: req.bodu.question,
+                question: req.body.question,
                 answer: req.body.answer
               });
         
@@ -133,7 +134,6 @@ module.exports = {
         //          accessToken
         //      });
         // })
-    }
 
 
         /*console.log("User.js",req.body.email);
