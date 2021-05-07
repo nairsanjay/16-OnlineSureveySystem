@@ -73,7 +73,6 @@ function Login(props){
     }
 
     const loginAsGuest = ()=>{
-        
         authService.loginAsGuest()
         .then(() => {
           console.log("From Login.js",from.pathname);
@@ -140,7 +139,7 @@ function Login(props){
                                 <button onClick={logout}>Logout </button>
                             </div>) : (
                               <div>
-                                <LoginContainer />
+                                <LoginContainer value = {props}/>
                                 <Button
                                 onClick={loginAsGuest}
                                 variant="contained"

@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Tab,Tabs } from '@material-ui/core';
+import authService from '../services/authService';
+import { useHistory } from "react-router-dom";
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
@@ -37,11 +39,63 @@ function TabPanel(props) {
     );
   }
 
-const LoginContainer = () => {
+const LoginContainer = (props) => {
     const [value, setvalue] = useState(0);
+    let history = useHistory();
+    const { from } = { from: { pathname: '/' } }
     const handleChange = (event, newValue) =>{
         setvalue(newValue);
     }
+
+    const signInProper = (data) =>{
+      authService.signInProper(data)
+      .then(() => {
+        console.log("From Login.js",from.pathname);
+        
+        if(from.pathname == "/login"){
+          history.push("/");
+
+        }else{
+          history.push(from.pathname);
+        }
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          console.log(resMessage);
+        }      
+        );
+    }
+
+    const signUpProper = (data) =>{
+      authService.signUpProper(data)
+      .then(() => {
+        console.log("From Login.js",from.pathname);
+        
+        if(from.pathname == "/login"){
+          history.push("/");
+
+        }else{
+          history.push(from.pathname);
+        }
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          console.log(resMessage);
+        }      
+        );
+    }
+
+
     return (
         <Paper square>
             <Tabs
@@ -56,10 +110,10 @@ const LoginContainer = () => {
               <Tab label="Sign Up" />
             </Tabs>
             <TabPanel value={value} index={0}>
-              <SignIn />
+              <SignIn submit={signInProper}/>
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <SignUp />
+              <SignUp submit={signUpProper}/>
             </TabPanel>
         </Paper>
     )

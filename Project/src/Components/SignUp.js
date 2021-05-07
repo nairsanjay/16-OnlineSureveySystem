@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-const SignUp = () => {
+const SignUp = (props) => {
     const useStyles = makeStyles((theme) => ({
         paper: {
           marginTop: theme.spacing(8),
@@ -34,6 +34,30 @@ const SignUp = () => {
           backgroundColor: 'blue',
         },
       }));
+    const [value,setvalue] = React.useState({
+        data: {
+            name: '',
+            email: '',
+            password: '',
+            question: '',
+            answer: ''
+        },
+        loading: false,
+        errors: {}
+    });
+
+    const onChange = e => {
+        setvalue({data: {...value.data, [e.target.name]: e.target.value}});
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+        props.submit(value.data)
+    };
+
+
+
     const classes = useStyles();
     return (
         <Container component="main" maxWidth="xs">
@@ -50,12 +74,14 @@ const SignUp = () => {
             <Grid item xs={12}>
               <TextField
                 autoComplete="fname"
-                name="fullname"
+                name="name"
                 variant="outlined"
                 required
                 fullWidth
                 id="fullname"
                 label="Full Name"
+                value = {value.data.name}
+                onChange = {onChange}
                 autoFocus
               />
             </Grid>
@@ -68,6 +94,8 @@ const SignUp = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value = {value.data.email}
+                onChange = {onChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -80,6 +108,8 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value = {value.data.password}
+                onChange = {onChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -102,6 +132,8 @@ const SignUp = () => {
                 name="question"
                 label="Security Question"
                 id="question"
+                value = {value.data.question}
+                onChange = {onChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -112,6 +144,8 @@ const SignUp = () => {
                 name="answer"
                 label="Answer"
                 id="answer"
+                value = {value.data.answer}
+                onChange = {onChange}
               />
             </Grid>
           </Grid>
@@ -124,13 +158,13 @@ const SignUp = () => {
           >
             Sign Up
           </Button>
-          <Grid container justify="flex-end">
+          {/* <Grid container justify="flex-end">
             <Grid item>
               <Link href="#" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
-          </Grid>
+          </Grid> */}
         </form>
       </div>
     </Container>

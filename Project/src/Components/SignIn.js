@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 
-const SignIn = () => {
+const SignIn = (props) => {
 
     const useStyles = makeStyles((theme) => ({
         paper: {
@@ -36,7 +36,26 @@ const SignIn = () => {
             backgroundColor: 'blue',
         },
     }));
+    const [value,setvalue] = React.useState({
+        data: {
+            email: '',
+            password: ''
+        },
+        loading: false,
+        errors: {}
+    });
+
+    const onChange = e => {
+        setvalue({data: {...value.data, [e.target.name]: e.target.value}});
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+
+        props.submit(value.data)
+    };
     const classes = useStyles();
+
     return (
         <Container component = 'main' maxWidth='xs'>
             <CssBaseline />
@@ -49,12 +68,10 @@ const SignIn = () => {
                     </Typography>
                     <form className={classes.form} noValidate>
                         <TextField
-                            variant = 'outlined'
-                            margin = 'normal'
-                            required fullWidth
-                            id = 'email'
-                            label = 'Email Address'
-                            name = 'email'
+                            variant = 'outlined' margin = 'normal' required fullWidth
+                            id = 'email' label = 'Email Address' name = 'email'
+                            value = {value.data.email}
+                            onChange = {onChange}
                             autoComplete = 'email'
                             autoFocus 
                         />
@@ -64,17 +81,16 @@ const SignIn = () => {
                             required fullWidth
                             name="password" label="Password" type="password"
                             id="password"
+                            value = {value.data.password}
+                            onChange = {onChange}
                             autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
                         />
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
+                            onClick = {onSubmit}
                             className={classes.submit}>
                           Sign In
                         </Button>
@@ -84,11 +100,11 @@ const SignIn = () => {
                               Forgot password?
                             </Link>
                           </Grid>
-                          <Grid item>
+                          {/* <Grid item>
                             <Link href="#" variant="body2">
                               {"Don't have an account? Sign Up"}
                             </Link>
-                          </Grid>
+                          </Grid> */}
                         </Grid>
                     </form>
                 </div>
