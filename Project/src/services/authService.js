@@ -86,6 +86,7 @@ export default   {
     },
     
     signUpProper(data){
+      console.log('auth')
       return axios
        .post(API_URL + "signUp", data)
        .then(response => {

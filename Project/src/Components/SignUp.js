@@ -50,7 +50,7 @@ const SignUp = (props) => {
         setvalue({data: {...value.data, [e.target.name]: e.target.value}});
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = (e) =>{
         e.preventDefault()
 
         props.submit(value.data)
@@ -155,6 +155,7 @@ const SignUp = (props) => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={onSubmit}
           >
             Sign Up
           </Button>

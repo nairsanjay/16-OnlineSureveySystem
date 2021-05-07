@@ -1,7 +1,9 @@
 const UserModel = require('../db/User')
 const jwt = require('jsonwebtoken');
 const jwtDecode = require('jwt-decode');
-
+const express = require("express");
+const router = express.Router();
+const bcrypt = require("bcryptjs");
 
 module.exports = {
     loginGet : async(req,res)=>{
@@ -20,7 +22,7 @@ module.exports = {
         email: req.body.email
       }
 
-        var newUser=new  UserModel(userData2);
+        var newUser=new UserModel(userData2);
         console.log("From UserService.js",newUser);
         newUser.save().then((docs)=>{                        
                 var user = { 
@@ -90,6 +92,7 @@ module.exports = {
             question: req.bodu.question,
             answer: req.body.answer
         }
+        console.log(userData2)
         UserModel.findOne({ email: req.body.email }).then(user => {
             if (user) {
               return res.status(400).json({ email: "Email already exists" });

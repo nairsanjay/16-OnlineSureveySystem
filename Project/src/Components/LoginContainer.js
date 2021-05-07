@@ -48,6 +48,7 @@ const LoginContainer = (props) => {
     }
 
     const signInProper = (data) =>{
+      console.log("Hi")
       authService.signInProper(data)
       .then(() => {
         console.log("From Login.js",from.pathname);
@@ -72,6 +73,7 @@ const LoginContainer = (props) => {
     }
 
     const signUpProper = (data) =>{
+      console.log('signUp');
       authService.signUpProper(data)
       .then(() => {
         console.log("From Login.js",from.pathname);
