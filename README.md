@@ -1,10 +1,10 @@
 # OnlineSureveySystem
-To run the app first cd into project folder
-npm install
-cd server
-npm install
-cd..
-npm run dev
+To run the app first cd into project folder <br /> 
+npm install <br /> 
+cd server <br /> 
+npm install <br /> 
+cd.. <br /> 
+npm run dev <br />  <br /> 
 
 Members-<br />
 | Student ID  | Username      | Name                   |
